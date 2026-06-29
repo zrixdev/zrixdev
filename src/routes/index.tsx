@@ -67,6 +67,7 @@ function Portfolio() {
 
 function Nav() {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("home");
   const [isDark, setIsDark] = useState(() => {
     if (typeof window !== "undefined") {
       return !document.documentElement.hasAttribute("data-theme");
@@ -85,46 +86,99 @@ function Nav() {
     }
   }, [isDark]);
 
+  useEffect(() => {
+    const sections = NAV.map((n) => document.getElementById(n.id)).filter(Boolean) as HTMLElement[];
+    if (sections.length === 0) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
+    );
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    setOpen(false);
+    const el = document.getElementById(id);
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - 72;
+      window.scrollTo({ top, behavior: "smooth" });
+      history.replaceState(null, "", `#${id}`);
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <div className="flex items-center gap-3">
+        <a href="#home" onClick={(e) => handleNavClick(e, "home")} className="flex items-center gap-2 font-display text-sm font-bold">
+          <span className="grid h-8 w-8 place-items-center rounded-md bg-primary/15 text-primary">
+            <Boxes className="h-4 w-4" />
+          </span>
+          <span className="text-foreground">Zrix<span className="text-primary">.mc</span></span>
+        </a>
+        <nav className="hidden items-center gap-1 md:flex">
+          {NAV.map((n) => {
+            const isActive = active === n.id;
+            return (
+              <a
+                key={n.id}
+                href={`#${n.id}`}
+                onClick={(e) => handleNavClick(e, n.id)}
+                className={`relative rounded-md px-3 py-2 text-sm transition-colors ${
+                  isActive ? "text-foreground" : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                }`}
+              >
+                {n.label}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-active"
+                    className="absolute inset-x-2 -bottom-0.5 h-0.5 rounded-full bg-primary"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </a>
+            );
+          })}
+        </nav>
+        <div className="hidden items-center gap-2 md:flex">
           <button
             onClick={() => setIsDark(!isDark)}
-            className="grid h-8 w-8 place-items-center rounded-md border border-border/60 bg-surface text-muted-foreground transition-colors hover:text-foreground hover:border-primary/40"
+            className="grid h-9 w-9 place-items-center rounded-md border border-border/60 bg-surface text-muted-foreground transition-colors hover:text-foreground hover:border-primary/40"
             aria-label="Toggle theme"
           >
             {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
-          <a href="#home" className="flex items-center gap-2 font-display text-sm font-bold">
-            <span className="grid h-8 w-8 place-items-center rounded-md bg-primary/15 text-primary">
-              <Boxes className="h-4 w-4" />
-            </span>
-            <span className="text-foreground">Zrix<span className="text-primary">.mc</span></span>
+          <a href="#contact" onClick={(e) => handleNavClick(e, "contact")} className="rounded-md border border-primary/40 bg-primary/10 px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:glow-neon">
+            Hire me
           </a>
         </div>
-        <nav className="hidden items-center gap-1 md:flex">
-          {NAV.map((n) => (
-            <a key={n.id} href={`#${n.id}`} className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">
-              {n.label}
-            </a>
-          ))}
-        </nav>
-        <a href="#contact" className="hidden rounded-md border border-primary/40 bg-primary/10 px-4 py-2 font-display text-xs font-bold uppercase tracking-wider text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:glow-neon md:inline-block">
-          Hire me
-        </a>
-        <button onClick={() => setOpen(!open)} className="rounded-md p-2 text-foreground md:hidden" aria-label="Menu">
-          <div className="space-y-1.5">
-            <span className="block h-0.5 w-5 bg-current" />
-            <span className="block h-0.5 w-5 bg-current" />
-          </div>
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <button
+            onClick={() => setIsDark(!isDark)}
+            className="grid h-9 w-9 place-items-center rounded-md border border-border/60 bg-surface text-muted-foreground"
+            aria-label="Toggle theme"
+          >
+            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+          <button onClick={() => setOpen(!open)} className="rounded-md p-2 text-foreground" aria-label="Menu">
+            <div className="space-y-1.5">
+              <span className="block h-0.5 w-5 bg-current" />
+              <span className="block h-0.5 w-5 bg-current" />
+            </div>
+          </button>
+        </div>
       </div>
       {open && (
         <div className="border-t border-border bg-background md:hidden">
           <div className="flex flex-col p-4">
             {NAV.map((n) => (
-              <a key={n.id} href={`#${n.id}`} onClick={() => setOpen(false)} className="rounded-md px-3 py-3 text-sm text-muted-foreground hover:bg-secondary hover:text-foreground">
+              <a key={n.id} href={`#${n.id}`} onClick={(e) => handleNavClick(e, n.id)} className={`rounded-md px-3 py-3 text-sm ${active === n.id ? "bg-secondary text-foreground" : "text-muted-foreground hover:bg-secondary hover:text-foreground"}`}>
                 {n.label}
               </a>
             ))}
@@ -479,9 +533,9 @@ function Contact() {
             optimize existing setups, or do a one-off audit.
           </p>
           <div className="mt-8 space-y-3">
-            <ContactLink icon={Send} label="Telegram" value="@Zrixalive" href="https://t.me/zrixalive" />
             <ContactLink icon={Mail} label="Email" value="chheangezmlbb@gmail.com" href="mailto:chheangezmlbb@gmail.com" />
             <ContactLink icon={MessageSquare} label="Discord" value="@Zrix6dolly" href="#" />
+            <ContactLink icon={Send} label="Telegram" value="@Zrixalive" href="https://t.me/zrixalive" />
           </div>
         </div>
         <form
