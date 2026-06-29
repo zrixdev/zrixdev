@@ -388,9 +388,21 @@ function Projects() {
             A few representative builds — from raw VPS to live networks.
           </p>
         </div>
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+        >
           {PROJECTS.map((p) => (
-            <article key={p.title} className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-surface transition-all hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_10px_40px_-12px_oklch(0.86_0.22_145/0.4)]">
+            <motion.article
+              key={p.title}
+              variants={fadeUp}
+              whileHover={{ y: -6 }}
+              transition={{ type: "spring", stiffness: 260, damping: 22 }}
+              className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-surface hover:border-primary/50 hover:shadow-[0_10px_40px_-12px_oklch(0.86_0.22_145/0.4)]"
+            >
               <div className="relative h-40 overflow-hidden border-b border-border bg-background">
                 <div className="absolute inset-0 hero-bg opacity-60" />
                 <div className="absolute inset-0 grid place-items-center">
