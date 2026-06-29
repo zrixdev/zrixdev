@@ -4,7 +4,7 @@ import { motion, useReducedMotion, type Variants } from "motion/react";
 import {
   Server, Terminal, Cpu, Shield, Network, Database, Boxes, Wrench,
   Hammer, Code2, Gauge, Mail, MessageSquare, ArrowRight, Check,
-  Sparkles, Activity, Send,
+  Sparkles, Activity, Send, Sun, Moon,
 } from "lucide-react";
 
 const fadeUp: Variants = {
