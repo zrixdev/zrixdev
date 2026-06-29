@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import {
   Server, Terminal, Cpu, Shield, Network, Database, Boxes, Wrench,
   Hammer, Code2, Gauge, Mail, MessageSquare, ArrowRight, Check,
-  Sparkles, Activity, Send,
+  Sparkles, Activity, Send, Sun, Moon,
 } from "lucide-react";
 
 const fadeUp: Variants = {
@@ -35,7 +35,7 @@ function Reveal({ children, className, delay = 0 }: { children: ReactNode; class
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Alex Carter — Minecraft Server Developer & Sysadmin" },
+      { title: "Zrix — Minecraft Server Developer & Sysadmin" },
       { name: "description", content: "5+ years building high-performance Minecraft servers, plugin stacks, and VPS infrastructure. View skills, projects, and contact." },
     ],
   }),
@@ -67,15 +67,42 @@ function Portfolio() {
 
 function Nav() {
   const [open, setOpen] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window !== "undefined") {
+      return !document.documentElement.hasAttribute("data-theme");
+    }
+    return true;
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDark) {
+      root.removeAttribute("data-theme");
+      localStorage.setItem("theme", "dark");
+    } else {
+      root.setAttribute("data-theme", "light");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDark]);
+
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a href="#home" className="flex items-center gap-2 font-display text-sm font-bold">
-          <span className="grid h-8 w-8 place-items-center rounded-md bg-primary/15 text-primary">
-            <Boxes className="h-4 w-4" />
-          </span>
-          <span className="text-foreground">alex<span className="text-primary">.mc</span></span>
-        </a>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setIsDark(!isDark)}
+            className="grid h-8 w-8 place-items-center rounded-md border border-border/60 bg-surface text-muted-foreground transition-colors hover:text-foreground hover:border-primary/40"
+            aria-label="Toggle theme"
+          >
+            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+          <a href="#home" className="flex items-center gap-2 font-display text-sm font-bold">
+            <span className="grid h-8 w-8 place-items-center rounded-md bg-primary/15 text-primary">
+              <Boxes className="h-4 w-4" />
+            </span>
+            <span className="text-foreground">Zrix<span className="text-primary">.mc</span></span>
+          </a>
+        </div>
         <nav className="hidden items-center gap-1 md:flex">
           {NAV.map((n) => (
             <a key={n.id} href={`#${n.id}`} className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">
@@ -452,9 +479,9 @@ function Contact() {
             optimize existing setups, or do a one-off audit.
           </p>
           <div className="mt-8 space-y-3">
-            <ContactLink icon={MessageSquare} label="Discord" value="zrix6dolly" href="#" />
+            <ContactLink icon={Send} label="Telegram" value="@Zrixalive" href="https://t.me/zrixalive" />
             <ContactLink icon={Mail} label="Email" value="chheangezmlbb@gmail.com" href="mailto:chheangezmlbb@gmail.com" />
-            <ContactLink icon={Send} label="Telegram" value="@zrixalive" href="https://t.me/zrixalive" />
+            <ContactLink icon={MessageSquare} label="Discord" value="@Zrix6dolly" href="#" />
           </div>
         </div>
         <form
@@ -534,7 +561,7 @@ function Footer() {
     <footer className="border-t border-border bg-background">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-6 py-8 sm:flex-row">
         <p className="font-display text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Alex Carter · Built with precision.
+          © {new Date().getFullYear()} Zrix · Built with precision.
         </p>
         <p className="font-display text-xs text-muted-foreground">
           <span className="text-primary">TPS</span> 20.0 / 20
