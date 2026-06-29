@@ -1,10 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import {
   Server, Terminal, Cpu, Shield, Network, Database, Boxes, Wrench,
   Hammer, Code2, Gauge, Github, Mail, MessageSquare, ArrowRight, Check,
   Sparkles, Activity,
 } from "lucide-react";
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const stagger: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+};
+
+function Reveal({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+  return (
+    <motion.div
+      className={className}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-80px" }}
+      variants={fadeUp}
+      transition={{ delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
