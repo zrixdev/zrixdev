@@ -67,15 +67,42 @@ function Portfolio() {
 
 function Nav() {
   const [open, setOpen] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window !== "undefined") {
+      return !document.documentElement.hasAttribute("data-theme");
+    }
+    return true;
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDark) {
+      root.removeAttribute("data-theme");
+      localStorage.setItem("theme", "dark");
+    } else {
+      root.setAttribute("data-theme", "light");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDark]);
+
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a href="#home" className="flex items-center gap-2 font-display text-sm font-bold">
-          <span className="grid h-8 w-8 place-items-center rounded-md bg-primary/15 text-primary">
-            <Boxes className="h-4 w-4" />
-          </span>
-          <span className="text-foreground">alex<span className="text-primary">.mc</span></span>
-        </a>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setIsDark(!isDark)}
+            className="grid h-8 w-8 place-items-center rounded-md border border-border/60 bg-surface text-muted-foreground transition-colors hover:text-foreground hover:border-primary/40"
+            aria-label="Toggle theme"
+          >
+            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+          <a href="#home" className="flex items-center gap-2 font-display text-sm font-bold">
+            <span className="grid h-8 w-8 place-items-center rounded-md bg-primary/15 text-primary">
+              <Boxes className="h-4 w-4" />
+            </span>
+            <span className="text-foreground">Zrix<span className="text-primary">.mc</span></span>
+          </a>
+        </div>
         <nav className="hidden items-center gap-1 md:flex">
           {NAV.map((n) => (
             <a key={n.id} href={`#${n.id}`} className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">
