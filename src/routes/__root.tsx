@@ -77,10 +77,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Alex Carter — Minecraft Server Developer & Sysadmin" },
+      { title: "Zrix — Minecraft Server Developer & Sysadmin" },
       { name: "description", content: "Portfolio of a Minecraft server developer and systems administrator with 5+ years building high-performance servers, plugin stacks, and VPS infrastructure." },
-      { name: "author", content: "Alex Carter" },
-      { property: "og:title", content: "Alex Carter — Minecraft Server Developer & Sysadmin" },
+      { name: "author", content: "Zrix" },
+      { property: "og:title", content: "Zrix — Minecraft Server Developer & Sysadmin" },
       { property: "og:description", content: "5+ years architecting Minecraft servers, optimizing Paper/Purpur, and managing rock-solid VPS infrastructure." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
