@@ -109,50 +109,70 @@ function Nav() {
 }
 
 function Hero() {
+  const reduce = useReducedMotion();
   return (
     <section id="home" className="relative overflow-hidden hero-bg">
-      <div className="mx-auto max-w-6xl px-6 pb-24 pt-20 md:pb-32 md:pt-28">
-        <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-display text-[11px] font-semibold uppercase tracking-widest text-primary">
+      <motion.div
+        className="mx-auto max-w-6xl px-6 pb-24 pt-20 md:pb-32 md:pt-28"
+        initial="hidden"
+        animate="show"
+        variants={stagger}
+      >
+        <motion.div variants={fadeUp} className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-display text-[11px] font-semibold uppercase tracking-widest text-primary">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
           </span>
           Available for new server builds
-        </div>
-        <h1 className="mt-6 font-display text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
+        </motion.div>
+        <motion.h1 variants={fadeUp} className="mt-6 font-display text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
           Building & Optimizing<br />
           <span className="text-gradient">High-Performance</span><br />
           Minecraft Infrastructure.
-        </h1>
-        <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+        </motion.h1>
+        <motion.p variants={fadeUp} className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
           I'm Alex — a Minecraft server developer and systems administrator with{" "}
           <span className="text-foreground">5+ years</span> of experience in server architecture,
           plugin configuration, and VPS management. I build servers that stay online,
           run fast, and scale cleanly.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a href="#skills" className="group inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 font-display text-sm font-bold text-primary-foreground transition-all hover:glow-neon">
+        </motion.p>
+        <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-3">
+          <motion.a
+            href="#skills"
+            whileHover={reduce ? undefined : { y: -2 }}
+            whileTap={reduce ? undefined : { scale: 0.97 }}
+            className="group inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 font-display text-sm font-bold text-primary-foreground transition-all hover:glow-neon"
+          >
             View My Skills
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </a>
-          <a href="#contact" className="inline-flex items-center gap-2 rounded-md border border-border bg-surface px-5 py-3 font-display text-sm font-bold text-foreground transition-colors hover:border-primary/50 hover:bg-surface-elevated">
+          </motion.a>
+          <motion.a
+            href="#contact"
+            whileHover={reduce ? undefined : { y: -2 }}
+            whileTap={reduce ? undefined : { scale: 0.97 }}
+            className="inline-flex items-center gap-2 rounded-md border border-border bg-surface px-5 py-3 font-display text-sm font-bold text-foreground transition-colors hover:border-primary/50 hover:bg-surface-elevated"
+          >
             Contact Me
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
 
-        <div className="mt-16 grid gap-3 sm:grid-cols-3">
+        <motion.div variants={stagger} className="mt-16 grid gap-3 sm:grid-cols-3">
           <TerminalCard icon={Server} label="paper-1.21.jar" value="TPS 20.0 / 20" />
           <TerminalCard icon={Activity} label="systemctl status" value="active (running)" />
           <TerminalCard icon={Shield} label="firewall" value="hardened" />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
 
 function TerminalCard({ icon: Icon, label, value }: { icon: any; label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-border bg-surface/80 p-4 backdrop-blur transition-colors hover:border-primary/40">
+    <motion.div
+      variants={fadeUp}
+      whileHover={{ y: -3, borderColor: "oklch(0.86 0.22 145 / 0.5)" }}
+      className="rounded-lg border border-border bg-surface/80 p-4 backdrop-blur"
+    >
       <div className="flex items-center gap-2 text-xs text-muted-foreground">
         <Icon className="h-3.5 w-3.5 text-primary" />
         <span className="font-display">{label}</span>
@@ -160,7 +180,7 @@ function TerminalCard({ icon: Icon, label, value }: { icon: any; label: string; 
       <div className="mt-2 font-display text-sm font-bold text-foreground">
         <span className="text-primary">→</span> {value}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
