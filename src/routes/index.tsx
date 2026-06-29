@@ -190,7 +190,7 @@ function About() {
       <div className="mx-auto max-w-6xl px-6 py-20">
         <SectionTag>About</SectionTag>
         <div className="mt-4 grid gap-10 md:grid-cols-[1.4fr_1fr]">
-          <div>
+          <Reveal>
             <h2 className="font-display text-3xl font-bold text-foreground md:text-4xl">
               I run Minecraft servers like production infrastructure.
             </h2>
@@ -200,21 +200,27 @@ function About() {
               years I've shipped survival networks, mini-game hubs, and custom economies — and
               fixed plenty of broken ones along the way.
             </p>
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+            <motion.ul
+              className="mt-6 grid gap-3 sm:grid-cols-2"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-60px" }}
+              variants={stagger}
+            >
               {[
                 "Production-grade Linux ops",
                 "Plugin stacks that don't lag",
                 "Network-wide data sync",
                 "Documented, handover-ready setups",
               ].map((t) => (
-                <li key={t} className="flex items-start gap-2 text-sm text-foreground">
+                <motion.li key={t} variants={fadeUp} className="flex items-start gap-2 text-sm text-foreground">
                   <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                   {t}
-                </li>
+                </motion.li>
               ))}
-            </ul>
-          </div>
-          <div className="rounded-lg border border-border bg-background p-1 font-display text-xs">
+            </motion.ul>
+          </Reveal>
+          <Reveal delay={0.1}>
             <div className="flex items-center gap-1.5 border-b border-border px-3 py-2">
               <span className="h-2.5 w-2.5 rounded-full bg-destructive/70" />
               <span className="h-2.5 w-2.5 rounded-full bg-accent/70" />
