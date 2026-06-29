@@ -220,7 +220,7 @@ function About() {
               ))}
             </motion.ul>
           </Reveal>
-          <Reveal delay={0.1}>
+          <Reveal delay={0.1} className="rounded-lg border border-border bg-background p-1 font-display text-xs">
             <div className="flex items-center gap-1.5 border-b border-border px-3 py-2">
               <span className="h-2.5 w-2.5 rounded-full bg-destructive/70" />
               <span className="h-2.5 w-2.5 rounded-full bg-accent/70" />
@@ -238,7 +238,7 @@ function About() {
 $ uptime
   up 142 days, load: 0.18 0.21 0.19`}
             </pre>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
