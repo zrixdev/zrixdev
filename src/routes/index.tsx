@@ -1,10 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import {
   Server, Terminal, Cpu, Shield, Network, Database, Boxes, Wrench,
   Hammer, Code2, Gauge, Github, Mail, MessageSquare, ArrowRight, Check,
   Sparkles, Activity,
 } from "lucide-react";
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const stagger: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+};
+
+function Reveal({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+  return (
+    <motion.div
+      className={className}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-80px" }}
+      variants={fadeUp}
+      transition={{ delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -83,50 +109,70 @@ function Nav() {
 }
 
 function Hero() {
+  const reduce = useReducedMotion();
   return (
     <section id="home" className="relative overflow-hidden hero-bg">
-      <div className="mx-auto max-w-6xl px-6 pb-24 pt-20 md:pb-32 md:pt-28">
-        <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-display text-[11px] font-semibold uppercase tracking-widest text-primary">
+      <motion.div
+        className="mx-auto max-w-6xl px-6 pb-24 pt-20 md:pb-32 md:pt-28"
+        initial="hidden"
+        animate="show"
+        variants={stagger}
+      >
+        <motion.div variants={fadeUp} className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-display text-[11px] font-semibold uppercase tracking-widest text-primary">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
           </span>
           Available for new server builds
-        </div>
-        <h1 className="mt-6 font-display text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
+        </motion.div>
+        <motion.h1 variants={fadeUp} className="mt-6 font-display text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
           Building & Optimizing<br />
           <span className="text-gradient">High-Performance</span><br />
           Minecraft Infrastructure.
-        </h1>
-        <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+        </motion.h1>
+        <motion.p variants={fadeUp} className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
           I'm Alex — a Minecraft server developer and systems administrator with{" "}
           <span className="text-foreground">5+ years</span> of experience in server architecture,
           plugin configuration, and VPS management. I build servers that stay online,
           run fast, and scale cleanly.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a href="#skills" className="group inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 font-display text-sm font-bold text-primary-foreground transition-all hover:glow-neon">
+        </motion.p>
+        <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-3">
+          <motion.a
+            href="#skills"
+            whileHover={reduce ? undefined : { y: -2 }}
+            whileTap={reduce ? undefined : { scale: 0.97 }}
+            className="group inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 font-display text-sm font-bold text-primary-foreground transition-all hover:glow-neon"
+          >
             View My Skills
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </a>
-          <a href="#contact" className="inline-flex items-center gap-2 rounded-md border border-border bg-surface px-5 py-3 font-display text-sm font-bold text-foreground transition-colors hover:border-primary/50 hover:bg-surface-elevated">
+          </motion.a>
+          <motion.a
+            href="#contact"
+            whileHover={reduce ? undefined : { y: -2 }}
+            whileTap={reduce ? undefined : { scale: 0.97 }}
+            className="inline-flex items-center gap-2 rounded-md border border-border bg-surface px-5 py-3 font-display text-sm font-bold text-foreground transition-colors hover:border-primary/50 hover:bg-surface-elevated"
+          >
             Contact Me
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
 
-        <div className="mt-16 grid gap-3 sm:grid-cols-3">
+        <motion.div variants={stagger} className="mt-16 grid gap-3 sm:grid-cols-3">
           <TerminalCard icon={Server} label="paper-1.21.jar" value="TPS 20.0 / 20" />
           <TerminalCard icon={Activity} label="systemctl status" value="active (running)" />
           <TerminalCard icon={Shield} label="firewall" value="hardened" />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
 
 function TerminalCard({ icon: Icon, label, value }: { icon: any; label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-border bg-surface/80 p-4 backdrop-blur transition-colors hover:border-primary/40">
+    <motion.div
+      variants={fadeUp}
+      whileHover={{ y: -3, borderColor: "oklch(0.86 0.22 145 / 0.5)" }}
+      className="rounded-lg border border-border bg-surface/80 p-4 backdrop-blur"
+    >
       <div className="flex items-center gap-2 text-xs text-muted-foreground">
         <Icon className="h-3.5 w-3.5 text-primary" />
         <span className="font-display">{label}</span>
@@ -134,7 +180,7 @@ function TerminalCard({ icon: Icon, label, value }: { icon: any; label: string; 
       <div className="mt-2 font-display text-sm font-bold text-foreground">
         <span className="text-primary">→</span> {value}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -144,7 +190,7 @@ function About() {
       <div className="mx-auto max-w-6xl px-6 py-20">
         <SectionTag>About</SectionTag>
         <div className="mt-4 grid gap-10 md:grid-cols-[1.4fr_1fr]">
-          <div>
+          <Reveal>
             <h2 className="font-display text-3xl font-bold text-foreground md:text-4xl">
               I run Minecraft servers like production infrastructure.
             </h2>
@@ -154,21 +200,27 @@ function About() {
               years I've shipped survival networks, mini-game hubs, and custom economies — and
               fixed plenty of broken ones along the way.
             </p>
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+            <motion.ul
+              className="mt-6 grid gap-3 sm:grid-cols-2"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-60px" }}
+              variants={stagger}
+            >
               {[
                 "Production-grade Linux ops",
                 "Plugin stacks that don't lag",
                 "Network-wide data sync",
                 "Documented, handover-ready setups",
               ].map((t) => (
-                <li key={t} className="flex items-start gap-2 text-sm text-foreground">
+                <motion.li key={t} variants={fadeUp} className="flex items-start gap-2 text-sm text-foreground">
                   <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                   {t}
-                </li>
+                </motion.li>
               ))}
-            </ul>
-          </div>
-          <div className="rounded-lg border border-border bg-background p-1 font-display text-xs">
+            </motion.ul>
+          </Reveal>
+          <Reveal delay={0.1} className="rounded-lg border border-border bg-background p-1 font-display text-xs">
             <div className="flex items-center gap-1.5 border-b border-border px-3 py-2">
               <span className="h-2.5 w-2.5 rounded-full bg-destructive/70" />
               <span className="h-2.5 w-2.5 rounded-full bg-accent/70" />
@@ -186,7 +238,7 @@ function About() {
 $ uptime
   up 142 days, load: 0.18 0.21 0.19`}
             </pre>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -235,9 +287,20 @@ function Skills() {
         <h2 className="mt-4 max-w-2xl font-display text-3xl font-bold text-foreground md:text-4xl">
           A full stack for shipping Minecraft servers.
         </h2>
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+        <motion.div
+          className="mt-12 grid gap-6 lg:grid-cols-3"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+        >
           {SKILL_GROUPS.map((g) => (
-            <div key={g.title} className="group relative rounded-xl border border-border bg-surface p-6 transition-all hover:border-primary/40 hover:bg-surface-elevated">
+            <motion.div
+              key={g.title}
+              variants={fadeUp}
+              whileHover={{ y: -4 }}
+              className="group relative rounded-xl border border-border bg-surface p-6 transition-colors hover:border-primary/40 hover:bg-surface-elevated"
+            >
               <div className="flex items-center gap-3">
                 <span className="grid h-10 w-10 place-items-center rounded-md bg-primary/15 text-primary">
                   <g.icon className="h-5 w-5" />
@@ -252,9 +315,10 @@ function Skills() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
+
       </div>
     </section>
   );
@@ -270,19 +334,26 @@ const STATS = [
 function Stats() {
   return (
     <section className="border-y border-border/60 bg-surface/40">
-      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-px overflow-hidden bg-border md:grid-cols-4">
+      <motion.div
+        className="mx-auto grid max-w-6xl grid-cols-2 gap-px overflow-hidden bg-border md:grid-cols-4"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-60px" }}
+        variants={stagger}
+      >
         {STATS.map((s) => (
-          <div key={s.label} className="bg-background px-6 py-10 text-center">
+          <motion.div key={s.label} variants={fadeUp} className="bg-background px-6 py-10 text-center">
             <div className="font-display text-4xl font-extrabold text-gradient md:text-5xl">{s.value}</div>
             <div className="mt-2 font-display text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               {s.label}
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }
+
 
 const PROJECTS = [
   {
@@ -323,9 +394,21 @@ function Projects() {
             A few representative builds — from raw VPS to live networks.
           </p>
         </div>
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+        >
           {PROJECTS.map((p) => (
-            <article key={p.title} className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-surface transition-all hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_10px_40px_-12px_oklch(0.86_0.22_145/0.4)]">
+            <motion.article
+              key={p.title}
+              variants={fadeUp}
+              whileHover={{ y: -6 }}
+              transition={{ type: "spring", stiffness: 260, damping: 22 }}
+              className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-surface hover:border-primary/50 hover:shadow-[0_10px_40px_-12px_oklch(0.86_0.22_145/0.4)]"
+            >
               <div className="relative h-40 overflow-hidden border-b border-border bg-background">
                 <div className="absolute inset-0 hero-bg opacity-60" />
                 <div className="absolute inset-0 grid place-items-center">
@@ -346,9 +429,9 @@ function Projects() {
                   ))}
                 </div>
               </div>
-            </article>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
