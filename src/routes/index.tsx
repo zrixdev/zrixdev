@@ -533,9 +533,9 @@ function Contact() {
             optimize existing setups, or do a one-off audit.
           </p>
           <div className="mt-8 space-y-3">
-            <ContactLink icon={Send} label="Telegram" value="@Zrixalive" href="https://t.me/zrixalive" />
             <ContactLink icon={Mail} label="Email" value="chheangezmlbb@gmail.com" href="mailto:chheangezmlbb@gmail.com" />
             <ContactLink icon={MessageSquare} label="Discord" value="@Zrix6dolly" href="#" />
+            <ContactLink icon={Send} label="Telegram" value="@Zrixalive" href="https://t.me/zrixalive" />
           </div>
         </div>
         <form
