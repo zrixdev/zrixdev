@@ -452,9 +452,9 @@ function Contact() {
             optimize existing setups, or do a one-off audit.
           </p>
           <div className="mt-8 space-y-3">
-            <ContactLink icon={MessageSquare} label="Discord" value="alex.mc#0042" href="#" />
-            <ContactLink icon={Github} label="GitHub" value="github.com/alex-mc" href="https://github.com" />
-            <ContactLink icon={Mail} label="Email" value="alex@alexmc.dev" href="mailto:alex@alexmc.dev" />
+            <ContactLink icon={MessageSquare} label="Discord" value="zrix6dolly" href="#" />
+            <ContactLink icon={Mail} label="Email" value="chheangezmlbb@gmail.com" href="mailto:chheangezmlbb@gmail.com" />
+            <ContactLink icon={Send} label="Telegram" value="@zrixalive" href="https://t.me/zrixalive" />
           </div>
         </div>
         <form
