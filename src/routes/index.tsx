@@ -35,7 +35,7 @@ function Reveal({ children, className, delay = 0 }: { children: ReactNode; class
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Alex Carter — Minecraft Server Developer & Sysadmin" },
+      { title: "Zrix — Minecraft Server Developer & Sysadmin" },
       { name: "description", content: "5+ years building high-performance Minecraft servers, plugin stacks, and VPS infrastructure. View skills, projects, and contact." },
     ],
   }),
