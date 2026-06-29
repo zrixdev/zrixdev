@@ -561,7 +561,7 @@ function Footer() {
     <footer className="border-t border-border bg-background">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-6 py-8 sm:flex-row">
         <p className="font-display text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Alex Carter · Built with precision.
+          © {new Date().getFullYear()} Zrix · Built with precision.
         </p>
         <p className="font-display text-xs text-muted-foreground">
           <span className="text-primary">TPS</span> 20.0 / 20
