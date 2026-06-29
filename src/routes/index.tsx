@@ -3,8 +3,8 @@ import { useState, type ReactNode } from "react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import {
   Server, Terminal, Cpu, Shield, Network, Database, Boxes, Wrench,
-  Hammer, Code2, Gauge, Github, Mail, MessageSquare, ArrowRight, Check,
-  Sparkles, Activity,
+  Hammer, Code2, Gauge, Mail, MessageSquare, ArrowRight, Check,
+  Sparkles, Activity, Send,
 } from "lucide-react";
 
 const fadeUp: Variants = {
@@ -131,7 +131,7 @@ function Hero() {
           Minecraft Infrastructure.
         </motion.h1>
         <motion.p variants={fadeUp} className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-          I'm Alex — a Minecraft server developer and systems administrator with{" "}
+          I'm Zrix — a Minecraft server developer and systems administrator with{" "}
           <span className="text-foreground">5+ years</span> of experience in server architecture,
           plugin configuration, and VPS management. I build servers that stay online,
           run fast, and scale cleanly.
