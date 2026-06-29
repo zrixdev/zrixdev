@@ -328,19 +328,26 @@ const STATS = [
 function Stats() {
   return (
     <section className="border-y border-border/60 bg-surface/40">
-      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-px overflow-hidden bg-border md:grid-cols-4">
+      <motion.div
+        className="mx-auto grid max-w-6xl grid-cols-2 gap-px overflow-hidden bg-border md:grid-cols-4"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-60px" }}
+        variants={stagger}
+      >
         {STATS.map((s) => (
-          <div key={s.label} className="bg-background px-6 py-10 text-center">
+          <motion.div key={s.label} variants={fadeUp} className="bg-background px-6 py-10 text-center">
             <div className="font-display text-4xl font-extrabold text-gradient md:text-5xl">{s.value}</div>
             <div className="mt-2 font-display text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               {s.label}
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }
+
 
 const PROJECTS = [
   {
