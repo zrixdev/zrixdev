@@ -281,9 +281,20 @@ function Skills() {
         <h2 className="mt-4 max-w-2xl font-display text-3xl font-bold text-foreground md:text-4xl">
           A full stack for shipping Minecraft servers.
         </h2>
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+        <motion.div
+          className="mt-12 grid gap-6 lg:grid-cols-3"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+        >
           {SKILL_GROUPS.map((g) => (
-            <div key={g.title} className="group relative rounded-xl border border-border bg-surface p-6 transition-all hover:border-primary/40 hover:bg-surface-elevated">
+            <motion.div
+              key={g.title}
+              variants={fadeUp}
+              whileHover={{ y: -4 }}
+              className="group relative rounded-xl border border-border bg-surface p-6 transition-colors hover:border-primary/40 hover:bg-surface-elevated"
+            >
               <div className="flex items-center gap-3">
                 <span className="grid h-10 w-10 place-items-center rounded-md bg-primary/15 text-primary">
                   <g.icon className="h-5 w-5" />
@@ -298,9 +309,10 @@ function Skills() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
+
       </div>
     </section>
   );
