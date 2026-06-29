@@ -120,7 +120,7 @@ function Nav() {
           <span className="grid h-8 w-8 place-items-center rounded-md bg-primary/15 text-primary">
             <Boxes className="h-4 w-4" />
           </span>
-          <span className="text-foreground">Zrix<span className="text-primary">.mc</span></span>
+          <span className="text-foreground">Zrix<span className="text-primary">.Dev</span></span>
         </a>
         <nav className="hidden items-center gap-1 md:flex">
           {NAV.map((n) => {
